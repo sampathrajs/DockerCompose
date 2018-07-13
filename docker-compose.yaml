@@ -1,0 +1,23 @@
+version: '3'
+services:
+  app:
+    build: ./app-server/.
+    networks: 
+      - loadnetwork 
+  auth:
+    build: ./auth-server/.
+    networks: 
+      - loadnetwork
+  proxy:
+    build: ./nginx/.
+    ports:
+      - "80:80"   
+    networks: 
+      - loadnetwork      
+    links:
+      - auth
+      - app   
+networks:
+  loadnetwork:
+    driver: bridge        
+
